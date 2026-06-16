@@ -1,10 +1,10 @@
 # Process: Lease Renewals - Legacy (Google Calendar)
 
-Tracks annual lease renewals for slips, lots, and storage units. 
-The office manager maintains a Google Calendar where each tenant 
-has an event on their renewal date. When a renewal is sent the 
-word "Sent" is added to the event title. When the signed lease 
-is returned the title is cleaned up and the date is moved forward 
+Tracks annual lease renewals for slips, lots, and storage units.
+The office manager maintains a Google Calendar where each tenant
+has an event on their renewal date. When a renewal is sent the
+word "Sent" is added to the event title. When the signed lease
+is returned the title is cleaned up and the date is moved forward
 one year.
 
 ---
@@ -20,21 +20,19 @@ This process tracks lease renawals for lot, slip, and trailer leases. When the l
 > Who touches this process and what they're responsible for. Becomes your
 > Person columns, permissions, and task assignments.
 
-| Role | Name          | Responsibility |
-|------|---------------|----------------|
-| Office Administrator |Amy Dill| Reviews renewals, sends to tenant |
-| Tenant | Signs and returns renewal |
-| System (Flow) | Detects expiring leases, creates tasks, sends reminders |
+| Role                 | Name       | Responsibility                                          |
+| -------------------- | ---------- | ------------------------------------------------------- |
+| Office Administrator | Amy Dill   | Reviews renewals, sends to tenant                       |
+| Office Administrator | Jessi Dill | Signs and returns renewal                               |
+| COO                  | Jacob Dill | Update                                                  |
+| System (Flow)        | NA         | Detects expiring leases, creates tasks, sends reminders |
 
 ---
 
 ## 3. Data Model
 
-> The heart of the doc — this becomes your SharePoint Lists. One subsection per
-> list (entity). For each column give: **name — type — details/choices**.
-> Note lookups (relationships to other lists) explicitly.
-
 ### List: Lease Renewals
+
 - **Title** — Single line of text — auto-named (e.g. "Slip 14 — 2026")
 - **Property** — Lookup → *Properties* list
 - **Tenant** — Person
@@ -45,6 +43,7 @@ This process tracks lease renawals for lot, slip, and trailer leases. When the l
 - **Notes** — Multiple lines of text
 
 ### List: Properties
+
 - **Title** — Single line of text (slip/lot identifier)
 - **Type** — Choice: `Slip` / `Lot` / `Storage`
 - **CurrentTenant** — Person
@@ -79,6 +78,7 @@ flowchart TD
 > (scheduled, on-create, on-change) since that changes how the Flow is built.
 
 ### Flow 1: Detect expiring leases
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Property lease `ExpirationDate` ≤ 60 days out AND no `Pending`/`Sent` renewal exists
 - **Actions:**
@@ -87,6 +87,7 @@ flowchart TD
   3. Email Office Manager
 
 ### Flow 2: Reminder / escalation
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Status = `Sent` AND `DateSent` ≥ 14 days ago
 - **Actions:**
@@ -102,6 +103,7 @@ flowchart TD
 > answer writes to.
 
 ### Form: Manual Renewal Request
+
 - Property — dropdown (required) → writes to `Property`
 - Tenant name — text (required) → `Tenant`
 - Requested expiration — date (required) → `ExpirationDate`

@@ -24,11 +24,11 @@ followed up until signed.
 > Who touches this process and what they're responsible for. Becomes your
 > Person columns, permissions, and task assignments.
 
-| Role | Responsibility |
-|------|----------------|
-| Office Manager | Reviews renewals, sends to tenant |
-| Tenant | Signs and returns renewal |
-| System (Flow) | Detects expiring leases, creates tasks, sends reminders |
+| Role           | Responsibility                                          |
+| -------------- | ------------------------------------------------------- |
+| Office Manager | Reviews renewals, sends to tenant                       |
+| Tenant         | Signs and returns renewal                               |
+| System (Flow)  | Detects expiring leases, creates tasks, sends reminders |
 
 ---
 
@@ -39,6 +39,7 @@ followed up until signed.
 > Note lookups (relationships to other lists) explicitly.
 
 ### List: Lease Renewals
+
 - **Title** — Single line of text — auto-named (e.g. "Slip 14 — 2026")
 - **Property** — Lookup → *Properties* list
 - **Tenant** — Person
@@ -49,6 +50,7 @@ followed up until signed.
 - **Notes** — Multiple lines of text
 
 ### List: Properties
+
 - **Title** — Single line of text (slip/lot identifier)
 - **Type** — Choice: `Slip` / `Lot` / `Storage`
 - **CurrentTenant** — Person
@@ -83,6 +85,7 @@ flowchart TD
 > (scheduled, on-create, on-change) since that changes how the Flow is built.
 
 ### Flow 1: Detect expiring leases
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Property lease `ExpirationDate` ≤ 60 days out AND no `Pending`/`Sent` renewal exists
 - **Actions:**
@@ -91,6 +94,7 @@ flowchart TD
   3. Email Office Manager
 
 ### Flow 2: Reminder / escalation
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Status = `Sent` AND `DateSent` ≥ 14 days ago
 - **Actions:**
@@ -106,6 +110,7 @@ flowchart TD
 > answer writes to.
 
 ### Form: Manual Renewal Request
+
 - Property — dropdown (required) → writes to `Property`
 - Tenant name — text (required) → `Tenant`
 - Requested expiration — date (required) → `ExpirationDate`
