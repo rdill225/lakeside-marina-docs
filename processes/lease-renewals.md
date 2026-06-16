@@ -37,6 +37,47 @@ returned.
 > is the process tracker, linked to Assets by Lookup. **Asset Types** is a small
 > reference list feeding the Type dropdown.
 
+```mermaid
+erDiagram
+    ASSET_TYPES ||--o{ ASSETS : "categorizes"
+    ASSETS ||--o{ LEASE_RENEWALS : "renews"
+
+    ASSET_TYPES {
+        string Title "Slip / Lot / Trailer / Other"
+    }
+    ASSETS {
+        string UnitID PK "A-01, #01, 78 Lakeside"
+        lookup AssetType FK "to Asset Types"
+        currency YearPrice
+        choice Terms "Annual / Monthly"
+        string FirstName "mail merge"
+        string LastName "mail merge"
+        string Address "mail merge"
+        string City "mail merge"
+        string State "mail merge"
+        string Zip "mail merge"
+        string Email
+        string BoatMake "boat-specific"
+        string HullID "boat-specific"
+        string MobileHomeMake "lot-specific"
+        string Road "lot-specific"
+    }
+    LEASE_RENEWALS {
+        string Title PK "A-01 — 2026"
+        lookup Asset FK "to Assets"
+        choice Billing "Annual / Monthly"
+        choice Status "Pending / Sent / Signed / Expired"
+        date RenewalDate
+        date DateSent
+        date DateReturned
+        string Notes
+    }
+```
+
+> The ER diagram above shows abbreviated columns for readability — the full column
+> list for each list follows below. `PK` = primary key (the Title column in
+> SharePoint), `FK` = foreign key (a Lookup column).
+
 ### List: Asset Types *(reference / lookup)*
 
 - **Title** — Single line of text — the type name (`Slip` / `Lot` / `Trailer` / `Other`)
@@ -123,6 +164,19 @@ flowchart TD
     signed -->|Yes| record[Status: Signed, set DateReturned]
     record --> roll[Roll RenewalDate forward one year]
     roll --> done([End])
+```
+
+> **Status lifecycle** — the legal transitions for the `Status` choice column on the
+> Lease Renewals list. These become the rules the Flow enforces.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending : renewal due
+    Pending --> Sent : renewal mailed (set DateSent)
+    Sent --> Signed : tenant returns signed lease
+    Sent --> Expired : 30 days, no response
+    Signed --> [*] : roll date forward one year
+    Expired --> [*] : notify, do not drop silently
 ```
 
 ---
