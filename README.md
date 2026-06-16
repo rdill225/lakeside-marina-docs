@@ -7,6 +7,7 @@ and Forms.
 ## Why this repo exists
 
 Each process is documented once, in a consistent structure, so that:
+
 - The logic is captured in version control (real diffs, not "process_v3_FINAL").
 - A revision can be drafted on a branch without disturbing the live definition.
 - Any `.md` file here can be pasted straight into Claude to scaffold a build.
