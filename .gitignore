@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+*.swp
+
+# Mermaid / diagram exports (optional — uncomment if you export PNGs)
+# *.png
