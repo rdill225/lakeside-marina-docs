@@ -1,9 +1,9 @@
 # Process: Lease Renewals — SharePoint Build
 
-> Future-state design for the lease renewal system, replacing the Google Calendar
-> workflow documented in `lease-renewals-legacy.md`. Built from three source files:
-> `Mobile_Home_Park_List-Map.xlsx`, `Boat_List-Map.xlsx`, and
-> `Lakeside_Lease_Renewals.xlsx`.
+Future-state design for the lease renewal system, replacing the Google Calendar
+workflow documented in `lease-renewals-legacy.md`. Built from three source files:
+`Mobile_Home_Park_List-Map.xlsx`, `Boat_List-Map.xlsx`, and
+`Lakeside_Lease_Renewals.xlsx`.
 
 ---
 
