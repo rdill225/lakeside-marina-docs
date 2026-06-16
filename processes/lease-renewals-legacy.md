@@ -22,9 +22,9 @@ This process tracks lease renawals for lot, slip, and trailer leases. When the l
 
 | Role                 | Name       | Responsibility                                          |
 | -------------------- | ---------- | ------------------------------------------------------- |
-| Office Administrator | Amy Dill   | Reviews renewals, sends to tenant                       |
-| Office Administrator | Jessi Dill | Signs and returns renewal                               |
-| COO                  | Jacob Dill | Update                                                  |
+| Office Administrator | Amy Dill   | Sends leases out for renewal                            |
+| Office Administrator | Jessi Dill | Sends leases out for renewal                            |
+| COO                  | Jacob Dill | Reviews the data and identifies upcoming renewals       |
 | System (Flow)        | NA         | Detects expiring leases, creates tasks, sends reminders |
 
 ---
@@ -54,15 +54,19 @@ This process tracks lease renawals for lot, slip, and trailer leases. When the l
 
 ```mermaid
 flowchart TD
-    A[Lease expires in 60 days] --> B{Renewal already sent?}
-    B -->|No| C[Create renewal record - Status: Pending]
-    C --> D[Notify Office Manager]
+    Start --> A
+%% IS SENT ADDED HERE OR AFTER SENT?
+    A[Lease expires in <= 45 days] --> B{Renewal already sent?} 
+    B -->|No| C[Adds Sent in calendar title]
+    C --> D[Notify Office Administrator]
     D --> E[Send renewal to tenant - Status: Sent]
     B -->|Yes| F{Signed?}
     E --> F
     F -->|No, 14+ days| G[Send reminder / escalate]
-    F -->|Yes| H[Status: Signed - archive]
+    F -->|Yes| H[Sent Status removed from Calendar Title]
     G --> F
+    H --> DateUpdate[Update date on calendar to following year]
+    DateUpdate --> End([End])
 ```
 
 ---
