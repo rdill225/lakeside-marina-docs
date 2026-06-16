@@ -52,10 +52,6 @@ This process tracks lease renawals for lot, slip, and trailer leases. When the l
 
 ## 4. Process Flow
 
-> The visual logic. Mermaid lives in the markdown as text, so Claude reads the
-> branching directly — no Visio export or screenshot needed. Keep it focused on
-> decisions and handoffs.
-
 ```mermaid
 flowchart TD
     A[Lease expires in 60 days] --> B{Renewal already sent?}
