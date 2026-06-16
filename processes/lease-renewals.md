@@ -22,12 +22,12 @@ returned.
 
 ## 2. Actors / Roles
 
-| Role                 | Name       | Responsibility                                          |
-| -------------------- | ---------- | ------------------------------------------------------- |
-| Office Administrator | Amy Dill   | Sends leases out for renewal, records returns           |
-| Office Administrator | Jessi Dill | Sends leases out for renewal, records returns           |
-| COO                  | Jacob Dill | Reviews data, identifies upcoming renewals, sets pricing|
-| System (Flow)        | NA         | Flags upcoming renewals, creates tasks, sends reminders |
+| Role                 | Name       | Responsibility                                           |
+| -------------------- | ---------- | -------------------------------------------------------- |
+| Office Administrator | Amy Dill   | Sends leases out for renewal, records returns            |
+| Office Administrator | Jessi Dill | Sends leases out for renewal, records returns            |
+| COO                  | Jacob Dill | Reviews data, identifies upcoming renewals, sets pricing |
+| System (Flow)        | NA         | Flags upcoming renewals, creates tasks, sends reminders  |
 
 ---
 
@@ -89,7 +89,8 @@ erDiagram
 > alongside and are left blank when not applicable. A conditional Power Apps form
 > shows only the relevant fields at entry time.
 
-**Core / shared**
+### Core / shared
+
 - **UnitID** — Single line of text — slip/lot identifier (e.g. `A-01`, `#01`, `78 Lakeside`) — *primary key, used as the Title column*
 - **AssetType** — Lookup → *Asset Types* list
 - **YearPrice** — Currency
@@ -97,6 +98,7 @@ erDiagram
 - **Notes** — Multiple lines of text
 
 **Tenant contact** *(drives the mail merge)*
+
 - **FirstName** — Single line of text
 - **LastName** — Single line of text
 - **Address** — Single line of text
@@ -110,6 +112,7 @@ erDiagram
 - **Email2** — Single line of text
 
 **Boat-specific** *(blank for lots)*
+
 - **SlipType** — Choice: `Open` / `Covered` — from boat `Type` column
 - **SlipLength** — Number — boat `L`
 - **SlipWidth** — Number — boat `W`
@@ -125,6 +128,7 @@ erDiagram
 - **HullID** — Single line of text
 
 **Lot-specific** *(blank for boats)*
+
 - **RoadNumber** — Single line of text — lot `Road #`
 - **Road** — Single line of text
 - **MobileHomeMake** — Single line of text — lot `Mobile Home`
@@ -184,6 +188,7 @@ stateDiagram-v2
 ## 5. Automation Logic
 
 ### Flow 1: Detect upcoming renewals
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Asset's `RenewalDate` ≤ 60 days out AND no open (`Pending`/`Sent`) renewal exists for that asset
 - **Actions:**
@@ -192,6 +197,7 @@ stateDiagram-v2
   3. Email Office Administrator
 
 ### Flow 2: Reminder / escalation
+
 - **Trigger:** Scheduled — daily
 - **Condition:** Status = `Sent` AND `DateSent` ≥ 14 days ago
 - **Actions:**
@@ -199,6 +205,7 @@ stateDiagram-v2
   2. Flag the Planner task as overdue
 
 ### Flow 3: Roll forward on return
+
 - **Trigger:** On-change (Status → `Signed`)
 - **Condition:** Status changed to `Signed`
 - **Actions:**
@@ -210,6 +217,7 @@ stateDiagram-v2
 ## 6. Inputs / Forms
 
 ### Form: New / Edit Asset *(Power Apps customized list form)*
+
 - AssetType — dropdown (required) → `AssetType` — *drives which fields show*
 - UnitID — text (required) → `UnitID`
 - Tenant contact fields — text → contact columns
@@ -217,6 +225,7 @@ stateDiagram-v2
 - Lot fields — shown only when AssetType = Lot
 
 ### Form: Manual Renewal Request
+
 - Asset — dropdown (required) → `Asset`
 - Billing — choice (required) → `Billing`
 - Renewal date — date (required) → `RenewalDate`
