@@ -249,6 +249,6 @@ stateDiagram-v2
 - Confirm the renewal window — legacy doc referenced both 45 and 60 days; which is correct?
 - One renewals list with a single Asset lookup is the chosen design — confirm no need to ever link a renewal to two assets.
 - Where do signed lease PDFs get stored — SharePoint document library, or attached to the renewal list item?
-- Should the **mail merge** be kept as Word-on-the-desktop pulling from the list, or eventually moved into Power Automate (auto-generate the document)? I recommend we autogenerate but do this last. 
+- Should the **mail merge** be kept as Word-on-the-desktop pulling from the list, or eventually moved into Power Automate (auto-generate the document)? I recommend we autogenerate but do this last.
 - The boat list has extra tabs (`A Slips`, `Pricing Change`, etc.) that look like map/layout and history views — do any of these need to be preserved as data, or are they just reference?
 - Should `Year Price` / pricing live on the Asset, on the Renewal, or both (to keep history)?
