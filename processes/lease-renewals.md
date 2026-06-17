@@ -235,7 +235,7 @@ stateDiagram-v2
 
 ## 7. Business Rules & Edge Cases
 
-- Some tenants are **Monthly**, not Annual (e.g. Zoe Albanese / 78 Lakeside, Kenny). Monthly leases follow the same process as yearly for revewal. Only the billing cycle is different.
+- Some tenants are **Monthly**, not Annual (e.g. Zoe Albanese / 78 Lakeside, Kenny). Monthly leases follow the same process as yearly for renewal. Only the billing cycle is different.
 - The **Assets list is the mail merge source** — Word pulls First/Last name, Address, City, State, Zip from it. These fields must stay clean and complete or merges break.
 - **UnitID formats differ by type** — boats use `A-01`, lots use `#01`, others are freeform (`78 Lakeside`). UnitID stays text; no enforced format.
 - A `Signed` renewal rolls the date forward one year — it should never silently disappear (the legacy calendar risk).
@@ -249,6 +249,6 @@ stateDiagram-v2
 - Confirm the renewal window — legacy doc referenced both 45 and 60 days; which is correct?
 - One renewals list with a single Asset lookup is the chosen design — confirm no need to ever link a renewal to two assets.
 - Where do signed lease PDFs get stored — SharePoint document library, or attached to the renewal list item?
-- Should the **mail merge** be kept as Word-on-the-desktop pulling from the list, or eventually moved into Power Automate (auto-generate the document)? I reccomend we autogenerate but do this last. 
+- Should the **mail merge** be kept as Word-on-the-desktop pulling from the list, or eventually moved into Power Automate (auto-generate the document)? I recommend we autogenerate but do this last. 
 - The boat list has extra tabs (`A Slips`, `Pricing Change`, etc.) that look like map/layout and history views — do any of these need to be preserved as data, or are they just reference?
 - Should `Year Price` / pricing live on the Asset, on the Renewal, or both (to keep history)?
